@@ -79,5 +79,5 @@ class TransportRequestUnitFull : public TransportRequestUnit {
     std::string    motor_depot_str_;    //! Наименование автобазы/автоколонны
     bool           is_request_cancel_by_deadline_;  //! Заявка отменена с нарушением сроков
 
-    int read_xls(std::string filename) ;
+    int read_csv(std::string filename) ;
 };
