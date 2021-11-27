@@ -1,25 +1,28 @@
 ﻿#pragma once
 
+#ifndef H_TRANSPORT_REQUESTS
+#define H_TRANSPORT_REQUESTS
+
 #include <ctime>
 #include <string>
 #include <vector>
-
-class TransporRequestsList {
-    std::vector<TransportRequestUnitFull> list_requests;
-};
 
 /*! Заявка на автотранспорт
  *
  */
 class TransportRequestUnit {
 public:
-    struct tm    * time_4_get_vehicle_; //! Дата и время подачи ТС
+    struct tm      time_4_get_vehicle_; //! Дата и время подачи ТС
     unsigned int   passengers_numb_;    //! Количество пассажиров
     float          cargo_volume_; //! Объем груза: undefined => 0.0
     std::string    department_; //! Наименование структурного подразделения
     std::string    route_;  //! Маршрут
     std::string    adress_4_get_vehicle_;   //! Адрес подачи ТС
     std::string    category_vehicle_str_;   //! Категория ТС(текст)
+    TransportRequestUnit() {
+        //this->time_4_get_vehicle_ = struct tm() ;
+    }
+
     TransportRequestUnit(const time_t &      _time_4_get_vehicle,
                          const unsigned int  _passengers_numb = 0,
                          const float         _cargo_volume_ = 0,
@@ -40,7 +43,7 @@ public:
     std::string    request_numb_;   //! Номер заявки
     std::string    request_id_intro_;   //! Внутренний ИД заявки исполнителя
     std::string    status_description_; //! Описание статуса
-    struct tm    * time_return_vehicle_;    //! Время возвращения ТС
+    struct tm      time_return_vehicle_;    //! Время возвращения ТС
     std::string    priority_str_;  //! Приоритет (string)
     unsigned short priority_code_;  //! Приоритет (uint)
     std::string    request_type_str_;   //! Тип заявки
@@ -56,10 +59,10 @@ public:
              int   affiliation_type_vehicle_;   //! Тип транспортного средства по принадлежн
     std::string    signature_pixmap_;   //! пиктограмма подписи
     std::string    signature_fullname_; //! ФИО подписавшего
-    struct tm    * signature_time_; //! дата и время подписи
+    struct tm      signature_time_; //! дата и время подписи
     std::string    waybill_number_; //! Номер путевого листа
-    struct tm    * OTZ_time_beg_;   //! ОТЗ. дата и Время начала
-    struct tm    * OTZ_time_end_;   //! ОТЗ. дата и Время конца
+    struct tm      OTZ_time_beg_;   //! ОТЗ. дата и Время начала
+    struct tm      OTZ_time_end_;   //! ОТЗ. дата и Время конца
     float          OTZ_timework_;   //! ОТЗ. Время работы на заказчика
 
     std::string    OTZ;  //! все поля с меткой Ответ: (разделены символом ';')
@@ -68,11 +71,11 @@ public:
              int   area_department_;    //! Участок структурного подразделения
     std::string    violations_str_; //! Наименование нарушения при выполнении
              int   BE_; //! БЕ
-    struct tm    * request_time_;   //! Дата заявки
+    struct tm      request_time_;   //! Дата заявки
              int   request_ID_; //! ID заявки на перевозку
              int   request_status_; //! Статус заявки на перевозку
-    struct tm    * request_status_time_;   //! Дата и время заявки
-    struct tm    * work_time_;   //! Время работы на заказчика
+    struct tm      request_status_time_;   //! Дата и время заявки
+    struct tm      work_time_;   //! Время работы на заказчика
     std::string    request_type_;   //! Тип заявки на перевозку
     std::string    voucher_status_; //! Статус проверки талона
     std::string    voucher_check_errors_;//! Ошибки при сверке талона
@@ -81,5 +84,18 @@ public:
     std::string    motor_depot_str_;    //! Наименование автобазы/автоколонны
     bool           is_request_cancel_by_deadline_;  //! Заявка отменена с нарушением сроков
 
-    int read_file_with_tab_delim(std::string filename) ;
+    TransportRequestUnitFull() {
+
+    }
+    int read_file_with_tab_delim(std::string filename);
 };
+
+class TransporRequestsList {
+public:
+    std::vector<TransportRequestUnitFull> list_requests;
+
+
+};
+
+
+#endif //! H_TRANSPORT_REQUESTS
