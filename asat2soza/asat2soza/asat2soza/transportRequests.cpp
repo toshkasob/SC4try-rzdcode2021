@@ -26,8 +26,8 @@ TransporRequestsList::readFileWithTabDelim(const std::string & filename)
     {
         std::getline(finCsv, str_str);  //! read each string
         TransportRequestUnitFull cur_request;
-        cur_request.parseRequest(str_str);
-        this->list_requests.push_back(cur_request);
+        if (!cur_request.parseRequest(str_str))
+            this->list_requests.push_back(cur_request);
     }
     return OK;
 }
@@ -199,6 +199,23 @@ TransportRequestUnitFull::parseRequest(const std::string & str_str)
     }
 
     //pass
+
+    //passenger
+    prev_pos = next_pos + delta_pos;
+    next_pos = str_str.find(delim, prev_pos);
+    (next_pos == std::string::npos && prev_pos != std::string::npos) ? (next_pos = str_str.length()) : NULL;
+    cur_cell = (next_pos != std::string::npos && prev_pos != std::string::npos) ?
+        str_str.substr(prev_pos, next_pos - prev_pos) : "0";
+    std::istringstream(cur_cell) >> this->passengers_numb_;
+
+    //passenger
+    prev_pos = next_pos + delta_pos;
+    next_pos = str_str.find(delim, prev_pos);
+    (next_pos == std::string::npos && prev_pos != std::string::npos) ? (next_pos = str_str.length()) : NULL;
+    cur_cell = (next_pos != std::string::npos && prev_pos != std::string::npos) ?
+        str_str.substr(prev_pos, next_pos - prev_pos) : "0";
+    std::istringstream(cur_cell) >> this->passengers_numb_;
+
 
     prev_pos = next_pos + delta_pos;
     next_pos = str_str.find(delim, prev_pos);

@@ -31,7 +31,20 @@ public:
     }
 
     TransportRequestUnit(const TransportRequestUnit& _Src_Request) {
-        this->time_4_get_vehicle_ = _Src_Request.time_4_get_vehicle_; //! Дата и время подачи ТС
+        struct tm time_def = tm();
+        //this->time_4_get_vehicle_ = _Src_Request.time_4_get_vehicle_; //! Дата и время подачи ТС
+        this->time_4_get_vehicle_.tm_year = _Src_Request.time_4_get_vehicle_.tm_year;
+        this->time_4_get_vehicle_.tm_mon = _Src_Request.time_4_get_vehicle_.tm_mon;
+        this->time_4_get_vehicle_.tm_mday = _Src_Request.time_4_get_vehicle_.tm_mday;
+        this->time_4_get_vehicle_.tm_hour = _Src_Request.time_4_get_vehicle_.tm_hour;
+        this->time_4_get_vehicle_.tm_min = _Src_Request.time_4_get_vehicle_.tm_min;
+        this->time_4_get_vehicle_.tm_sec = _Src_Request.time_4_get_vehicle_.tm_sec;
+
+        this->time_4_get_vehicle_.tm_isdst = _Src_Request.time_4_get_vehicle_.tm_isdst;
+        this->time_4_get_vehicle_.tm_wday = _Src_Request.time_4_get_vehicle_.tm_wday;
+        this->time_4_get_vehicle_.tm_yday = _Src_Request.time_4_get_vehicle_.tm_yday;
+
+
         this->passengers_numb_ = _Src_Request.passengers_numb_;    //! Количество пассажиров
         this->cargo_volume_ = _Src_Request.cargo_volume_; //! Объем груза: undefined => 0.0
         this->department_ = _Src_Request.department_; //! Наименование структурного подразделения
@@ -56,7 +69,20 @@ public:
         if (this == &_Src_Request)
             return *this;
 
-        this->time_4_get_vehicle_ = _Src_Request.time_4_get_vehicle_; //! Дата и время подачи ТС
+        struct tm time_def = tm();
+        //this->time_4_get_vehicle_ = _Src_Request.time_4_get_vehicle_; //! Дата и время подачи ТС
+        this->time_4_get_vehicle_.tm_year = _Src_Request.time_4_get_vehicle_.tm_year;
+        this->time_4_get_vehicle_.tm_mon = _Src_Request.time_4_get_vehicle_.tm_mon;
+        this->time_4_get_vehicle_.tm_mday = _Src_Request.time_4_get_vehicle_.tm_mday;
+        this->time_4_get_vehicle_.tm_hour = _Src_Request.time_4_get_vehicle_.tm_hour;
+        this->time_4_get_vehicle_.tm_min = _Src_Request.time_4_get_vehicle_.tm_min;
+        this->time_4_get_vehicle_.tm_sec = _Src_Request.time_4_get_vehicle_.tm_sec;
+
+        this->time_4_get_vehicle_.tm_isdst = _Src_Request.time_4_get_vehicle_.tm_isdst;
+        this->time_4_get_vehicle_.tm_wday = _Src_Request.time_4_get_vehicle_.tm_wday;
+        this->time_4_get_vehicle_.tm_yday = _Src_Request.time_4_get_vehicle_.tm_yday;
+
+
         this->passengers_numb_ = _Src_Request.passengers_numb_;    //! Количество пассажиров
         this->cargo_volume_ = _Src_Request.cargo_volume_; //! Объем груза: undefined => 0.0
         this->department_ = _Src_Request.department_; //! Наименование структурного подразделения
@@ -65,6 +91,60 @@ public:
         this->category_vehicle_str_ = _Src_Request.category_vehicle_str_;   //! Категория ТС(текст)
         return *this;
     }
+    bool operator<(const TransportRequestUnit& _Src_Request)
+    {
+        if (this == &_Src_Request)
+            return false;
+
+        bool is_less_time_4_get_vehicle_ = false;
+        bool is_less_adress_4_get_vehicle_ = false;
+        bool is_less_category_vehicle_str_ = false;
+        bool is_less_passengers_numb_ = false;
+        bool is_less_route_ = false;
+
+        is_less_time_4_get_vehicle_ = 
+            this->time_4_get_vehicle_.tm_year < _Src_Request.time_4_get_vehicle_.tm_year ||
+            this->time_4_get_vehicle_.tm_mon < _Src_Request.time_4_get_vehicle_.tm_mon ||
+            this->time_4_get_vehicle_.tm_mday < _Src_Request.time_4_get_vehicle_.tm_mday ||
+            this->time_4_get_vehicle_.tm_hour < _Src_Request.time_4_get_vehicle_.tm_hour ||
+            this->time_4_get_vehicle_.tm_min < _Src_Request.time_4_get_vehicle_.tm_min ||
+            this->time_4_get_vehicle_.tm_sec < _Src_Request.time_4_get_vehicle_.tm_sec ;
+
+        is_less_adress_4_get_vehicle_ = this->adress_4_get_vehicle_ < _Src_Request.adress_4_get_vehicle_;
+        is_less_route_ = this->route_ < _Src_Request.route_;
+        is_less_category_vehicle_str_ = this->category_vehicle_str_ < _Src_Request.category_vehicle_str_;
+        is_less_passengers_numb_ = this->passengers_numb_ < _Src_Request.passengers_numb_;
+
+        return is_less_time_4_get_vehicle_ || is_less_adress_4_get_vehicle_ || is_less_route_ || is_less_category_vehicle_str_ || is_less_passengers_numb_;
+    }
+
+    bool operator==(const TransportRequestUnit& _Src_Request)
+    {
+        if (this == &_Src_Request)
+            return true;
+
+        bool is_equal_time_4_get_vehicle_ = false;
+        bool is_equal_adress_4_get_vehicle_ = false;
+        bool is_equal_category_vehicle_str_ = false;
+        bool is_equal_passengers_numb_ = false;
+        bool is_equal_route_ = false;
+
+        is_equal_time_4_get_vehicle_ =
+            this->time_4_get_vehicle_.tm_year < _Src_Request.time_4_get_vehicle_.tm_year ||
+            this->time_4_get_vehicle_.tm_mon < _Src_Request.time_4_get_vehicle_.tm_mon ||
+            this->time_4_get_vehicle_.tm_mday < _Src_Request.time_4_get_vehicle_.tm_mday ||
+            this->time_4_get_vehicle_.tm_hour < _Src_Request.time_4_get_vehicle_.tm_hour ||
+            this->time_4_get_vehicle_.tm_min < _Src_Request.time_4_get_vehicle_.tm_min ||
+            this->time_4_get_vehicle_.tm_sec < _Src_Request.time_4_get_vehicle_.tm_sec;
+
+        is_equal_adress_4_get_vehicle_ = this->adress_4_get_vehicle_ < _Src_Request.adress_4_get_vehicle_;
+        is_equal_route_ = this->route_ < _Src_Request.route_;
+        is_equal_category_vehicle_str_ = this->category_vehicle_str_ < _Src_Request.category_vehicle_str_;
+        is_equal_passengers_numb_ = this->passengers_numb_ < _Src_Request.passengers_numb_;
+
+        return is_equal_time_4_get_vehicle_ && is_equal_adress_4_get_vehicle_ && is_equal_route_ && is_equal_category_vehicle_str_ && is_equal_passengers_numb_;
+    }
+
 
 };
 
@@ -117,7 +197,7 @@ public:
     std::string    motor_depot_str_;    //! Наименование автобазы/автоколонны
     bool           is_request_cancel_by_deadline_;  //! Заявка отменена с нарушением сроков
 
-    TransportRequestUnitFull() {
+    TransportRequestUnitFull() : TransportRequestUnit() {
         struct tm time_def = tm();
         this->request_numb_ = "";
         this->request_id_intro_ = "";
@@ -164,7 +244,28 @@ public:
         this->is_request_cancel_by_deadline_ = false;
     }
 
-    TransportRequestUnitFull(const TransportRequestUnitFull & _Src_Request) {
+    TransportRequestUnitFull(const TransportRequestUnitFull & _Src_Request) : TransportRequestUnit(_Src_Request){
+        struct tm time_def = tm();
+        //this->time_4_get_vehicle_ = _Src_Request.time_4_get_vehicle_; //! Дата и время подачи ТС
+        this->time_4_get_vehicle_.tm_year = _Src_Request.time_4_get_vehicle_.tm_year;
+        this->time_4_get_vehicle_.tm_mon = _Src_Request.time_4_get_vehicle_.tm_mon;
+        this->time_4_get_vehicle_.tm_mday = _Src_Request.time_4_get_vehicle_.tm_mday;
+        this->time_4_get_vehicle_.tm_hour = _Src_Request.time_4_get_vehicle_.tm_hour;
+        this->time_4_get_vehicle_.tm_min = _Src_Request.time_4_get_vehicle_.tm_min;
+        this->time_4_get_vehicle_.tm_sec = _Src_Request.time_4_get_vehicle_.tm_sec;
+
+        this->time_4_get_vehicle_.tm_isdst = _Src_Request.time_4_get_vehicle_.tm_isdst;
+        this->time_4_get_vehicle_.tm_wday = _Src_Request.time_4_get_vehicle_.tm_wday;
+        this->time_4_get_vehicle_.tm_yday = _Src_Request.time_4_get_vehicle_.tm_yday;
+
+
+        this->passengers_numb_ = _Src_Request.passengers_numb_;    //! Количество пассажиров
+        this->cargo_volume_ = _Src_Request.cargo_volume_; //! Объем груза: undefined => 0.0
+        this->department_ = _Src_Request.department_; //! Наименование структурного подразделения
+        this->route_ = _Src_Request.route_;  //! Маршрут
+        this->adress_4_get_vehicle_ = _Src_Request.adress_4_get_vehicle_;   //! Адрес подачи ТС
+        this->category_vehicle_str_ = _Src_Request.category_vehicle_str_;   //! Категория ТС(текст)
+
         this->request_numb_ = _Src_Request.request_numb_;   //! Номер заявки
         this->request_id_intro_ = _Src_Request.request_id_intro_;   //! Внутренний ИД заявки исполнителя
         this->status_description_ = _Src_Request.status_description_; //! Описание статуса
@@ -210,10 +311,30 @@ public:
         this->is_request_cancel_by_deadline_ = _Src_Request.is_request_cancel_by_deadline_;  //! Заявка отменена с нарушением сроков
     }
 
-    TransportRequestUnitFull& operator=(const TransportRequestUnitFull & _Src_Request)
+    TransportRequestUnitFull& operator=(const TransportRequestUnitFull & _Src_Request) 
     {
         if (this == &_Src_Request)
             return *this;
+
+        struct tm time_def = tm();
+        //this->time_4_get_vehicle_ = _Src_Request.time_4_get_vehicle_; //! Дата и время подачи ТС
+        this->time_4_get_vehicle_.tm_year = _Src_Request.time_4_get_vehicle_.tm_year;
+        this->time_4_get_vehicle_.tm_mon = _Src_Request.time_4_get_vehicle_.tm_mon;
+        this->time_4_get_vehicle_.tm_mday = _Src_Request.time_4_get_vehicle_.tm_mday;
+        this->time_4_get_vehicle_.tm_hour = _Src_Request.time_4_get_vehicle_.tm_hour;
+        this->time_4_get_vehicle_.tm_min = _Src_Request.time_4_get_vehicle_.tm_min;
+        this->time_4_get_vehicle_.tm_sec = _Src_Request.time_4_get_vehicle_.tm_sec;
+        
+        this->time_4_get_vehicle_.tm_isdst = _Src_Request.time_4_get_vehicle_.tm_isdst;
+        this->time_4_get_vehicle_.tm_wday = _Src_Request.time_4_get_vehicle_.tm_wday;
+        this->time_4_get_vehicle_.tm_yday = _Src_Request.time_4_get_vehicle_.tm_yday;
+
+        this->passengers_numb_ = _Src_Request.passengers_numb_;    //! Количество пассажиров
+        this->cargo_volume_ = _Src_Request.cargo_volume_; //! Объем груза: undefined => 0.0
+        this->department_ = _Src_Request.department_; //! Наименование структурного подразделения
+        this->route_ = _Src_Request.route_;  //! Маршрут
+        this->adress_4_get_vehicle_ = _Src_Request.adress_4_get_vehicle_;   //! Адрес подачи ТС
+        this->category_vehicle_str_ = _Src_Request.category_vehicle_str_;   //! Категория ТС(текст)
 
         this->request_numb_ = _Src_Request.request_numb_;   //! Номер заявки
         this->request_id_intro_ = _Src_Request.request_id_intro_;   //! Внутренний ИД заявки исполнителя
@@ -260,6 +381,61 @@ public:
         this->is_request_cancel_by_deadline_ = _Src_Request.is_request_cancel_by_deadline_;  //! Заявка отменена с нарушением сроков
         return *this;
     }
+
+    bool operator<(const TransportRequestUnitFull& _Src_Request)
+    {
+        if (this == &_Src_Request)
+            return false;
+
+        bool is_less_time_4_get_vehicle_ = false;
+        bool is_less_adress_4_get_vehicle_ = false;
+        bool is_less_category_vehicle_str_ = false;
+        bool is_less_passengers_numb_ = false;
+        bool is_less_route_ = false;
+
+        is_less_time_4_get_vehicle_ =
+            this->time_4_get_vehicle_.tm_year < _Src_Request.time_4_get_vehicle_.tm_year ||
+            this->time_4_get_vehicle_.tm_mon < _Src_Request.time_4_get_vehicle_.tm_mon ||
+            this->time_4_get_vehicle_.tm_mday < _Src_Request.time_4_get_vehicle_.tm_mday ||
+            this->time_4_get_vehicle_.tm_hour < _Src_Request.time_4_get_vehicle_.tm_hour ||
+            this->time_4_get_vehicle_.tm_min < _Src_Request.time_4_get_vehicle_.tm_min ||
+            this->time_4_get_vehicle_.tm_sec < _Src_Request.time_4_get_vehicle_.tm_sec;
+
+        is_less_adress_4_get_vehicle_ = this->adress_4_get_vehicle_ < _Src_Request.adress_4_get_vehicle_;
+        is_less_route_ = this->route_ < _Src_Request.route_;
+        is_less_category_vehicle_str_ = this->category_vehicle_str_ < _Src_Request.category_vehicle_str_;
+        is_less_passengers_numb_ = this->passengers_numb_ < _Src_Request.passengers_numb_;
+
+        return is_less_time_4_get_vehicle_ || is_less_adress_4_get_vehicle_ || is_less_route_ || is_less_category_vehicle_str_ || is_less_passengers_numb_;
+    }
+    bool operator==(const TransportRequestUnitFull& _Src_Request)
+    {
+        if (this == &_Src_Request)
+            return true;
+
+        bool is_equal_time_4_get_vehicle_ = false;
+        bool is_equal_adress_4_get_vehicle_ = false;
+        bool is_equal_category_vehicle_str_ = false;
+        bool is_equal_passengers_numb_ = false;
+        bool is_equal_route_ = false;
+
+        is_equal_time_4_get_vehicle_ =
+            this->time_4_get_vehicle_.tm_year < _Src_Request.time_4_get_vehicle_.tm_year ||
+            this->time_4_get_vehicle_.tm_mon < _Src_Request.time_4_get_vehicle_.tm_mon ||
+            this->time_4_get_vehicle_.tm_mday < _Src_Request.time_4_get_vehicle_.tm_mday ||
+            this->time_4_get_vehicle_.tm_hour < _Src_Request.time_4_get_vehicle_.tm_hour ||
+            this->time_4_get_vehicle_.tm_min < _Src_Request.time_4_get_vehicle_.tm_min ||
+            this->time_4_get_vehicle_.tm_sec < _Src_Request.time_4_get_vehicle_.tm_sec;
+
+        is_equal_adress_4_get_vehicle_ = this->adress_4_get_vehicle_ < _Src_Request.adress_4_get_vehicle_;
+        is_equal_route_ = this->route_ < _Src_Request.route_;
+        is_equal_category_vehicle_str_ = this->category_vehicle_str_ < _Src_Request.category_vehicle_str_;
+        is_equal_passengers_numb_ = this->passengers_numb_ < _Src_Request.passengers_numb_;
+
+        return is_equal_time_4_get_vehicle_ && is_equal_adress_4_get_vehicle_ && is_equal_route_ && is_equal_category_vehicle_str_ && is_equal_passengers_numb_;
+    }
+
+
     int parseRequest(const std::string & str_str);
 };
 
