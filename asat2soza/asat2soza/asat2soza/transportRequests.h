@@ -87,13 +87,13 @@ public:
     TransportRequestUnitFull() {
 
     }
-    int read_file_with_tab_delim(std::string filename);
+    int parseRequest(const std::string & str_str);
 };
 
 class TransporRequestsList {
 public:
     std::vector<TransportRequestUnitFull> list_requests;
-
+    int readFileWithTabDelim(const std::string & filename);
 
 };
 

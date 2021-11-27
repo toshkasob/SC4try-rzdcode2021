@@ -8,7 +8,7 @@
 #include "transportRequests.h"
 
 int 
-TransportRequestUnitFull::read_file_with_tab_delim(std::string filename)
+TransporRequestsList::readFileWithTabDelim(const std::string & filename)
 {
     enum returnErrors
     {
@@ -21,10 +21,25 @@ TransportRequestUnitFull::read_file_with_tab_delim(std::string filename)
         return ERROR_FILE_OPEN;
     std::string str_str;
     std::getline(finCsv, str_str);  //! read header
-
     while (!finCsv.eof())
     {
         std::getline(finCsv, str_str);  //! read each string
+        TransportRequestUnitFull cur_request;
+        cur_request.parseRequest(str_str);
+        this->list_requests.push_back(cur_request);
+    }
+    return OK;
+}
+
+
+int 
+TransportRequestUnitFull::parseRequest(const std::string & str_str)
+{
+    enum returnErrors
+    {
+        OK, OTHER_ERROR
+    };
+
         size_t prev_pos = -1;
         size_t next_pos = -1;
         size_t delta_pos = 0;
@@ -188,6 +203,5 @@ TransportRequestUnitFull::read_file_with_tab_delim(std::string filename)
         next_pos = str_str.find(delim, prev_pos);
         this->request_numb_ = cur_cell = str_str.substr(prev_pos, next_pos - prev_pos);
 
-
-    }
+        return OK;
 }
