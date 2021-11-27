@@ -20,7 +20,14 @@ public:
     std::string    adress_4_get_vehicle_;   //! Адрес подачи ТС
     std::string    category_vehicle_str_;   //! Категория ТС(текст)
     TransportRequestUnit() {
-        //this->time_4_get_vehicle_ = struct tm() ;
+        struct tm time_def = tm();
+        this->time_4_get_vehicle_ = time_def;
+        this->passengers_numb_ = 0;
+        this->cargo_volume_ = 0.0;
+        this->department_ = "";
+        this->route_ = "";
+        this->adress_4_get_vehicle_ = "";
+        this->category_vehicle_str_ = "";
     }
 
     TransportRequestUnit(const TransportRequestUnit& _Src_Request) {
@@ -33,16 +40,16 @@ public:
         this->category_vehicle_str_ = _Src_Request.category_vehicle_str_;   //! Категория ТС(текст)
     }
 
-    TransportRequestUnit(const time_t &      _time_4_get_vehicle,
-                         const unsigned int  _passengers_numb = 0,
-                         const float         _cargo_volume_ = 0,
-                         const std::string & _department = "",
-                         const std::string & _route = "",
-                         const std::string & _adress_4_get_vehicle = "",
-                         const std::string& _category_vehicle_str = ""
-                        ) {
-        
-    }
+    //TransportRequestUnit(const time_t &      _time_4_get_vehicle,
+    //                     const unsigned int  _passengers_numb = 0,
+    //                     const float         _cargo_volume_ = 0,
+    //                     const std::string & _department = "",
+    //                     const std::string & _route = "",
+    //                     const std::string & _adress_4_get_vehicle = "",
+    //                     const std::string& _category_vehicle_str = ""
+    //                    ) {
+    //    
+    //}
 
     TransportRequestUnit& operator=(const TransportRequestUnit& _Src_Request) 
     {
@@ -110,11 +117,54 @@ public:
     std::string    motor_depot_str_;    //! Наименование автобазы/автоколонны
     bool           is_request_cancel_by_deadline_;  //! Заявка отменена с нарушением сроков
 
-    //TransportRequestUnitFull(TransportRequestUnitFull & _Src_Request) {
-    //    
-    //}
+    TransportRequestUnitFull() {
+        struct tm time_def = tm();
+        this->request_numb_ = "";
+        this->request_id_intro_ = "";
+        this->status_description_ = "";
+        this->time_return_vehicle_ = time_def;
+        this->priority_str_ = "";
+        this->priority_code_ = 0;
+        this->request_type_str_ = "";
+        this->employee_full_name_ = "";
+        this->purpose_trip = "";
+        this->category_vehicle_code_ = 0;
+        this->gosnomer_vehicle_ = "";
+        this->setevoynomer_vehicle_ = "";
+        this->is_intercity_ = "";
+        this->reject_reason_ = 0;
+        this->reject_reason_str_ = "";
+        this->answer_ = "";
+        this->affiliation_type_vehicle_ = 0;
+        this->signature_pixmap_ = "";
+        this->signature_fullname_ = "";
+        this->signature_time_ = time_def;
+        this->waybill_number_ = "";
+        this->OTZ_time_beg_ = time_def;
+        this->OTZ_time_end_ = time_def;
+        this->OTZ_timework_ = 0.0;
 
-    TransportRequestUnitFull(TransportRequestUnitFull & _Src_Request) {
+        this->OTZ = "";
+        this->is_vehicle_not_RZD_ = false;
+        this->MTA_numb_executor_ = "";
+        this->area_department_ = 0;
+        this->violations_str_ = "";
+        this->BE_ = 0;
+        this->request_time_ = time_def;
+        this->request_ID_ = 0;
+        this->request_status_ = 0;
+        this->request_status_time_ = time_def;
+        this->work_time_ = time_def;
+        this->request_type_ = "";
+        this->voucher_status_ = "";
+        this->voucher_check_errors_ = "";
+        this->region_code_ = 0;
+        this->region_str_ = "";
+        this->motor_depot_str_ = "";
+        this->is_request_cancel_by_deadline_ = false;
+    }
+
+    TransportRequestUnitFull(const TransportRequestUnitFull & _Src_Request) {
         this->request_numb_ = _Src_Request.request_numb_;   //! Номер заявки
         this->request_id_intro_ = _Src_Request.request_id_intro_;   //! Внутренний ИД заявки исполнителя
         this->status_description_ = _Src_Request.status_description_; //! Описание статуса
@@ -217,6 +267,31 @@ class TransporRequestsList {
 public:
     std::vector<TransportRequestUnitFull> list_requests;
     int readFileWithTabDelim(const std::string & filename);
+
+    TransporRequestsList() {
+        this->list_requests.clear();
+        this->list_requests.reserve(8000);
+    }
+    TransporRequestsList(const TransporRequestsList& _Src_Requests_List) {
+        this->list_requests.clear();
+        this->list_requests.reserve(_Src_Requests_List.list_requests.capacity());
+        this->list_requests.resize(_Src_Requests_List.list_requests.size());
+        this->list_requests.assign(_Src_Requests_List.list_requests.begin(), _Src_Requests_List.list_requests.end());
+        //for (int it = 0; it < _Src_Requests_List.list_requests.size(); it++) {
+        //    this->list_requests.at(it) = _Src_Requests_List.list_requests.at(it);
+        //}
+    }
+
+    TransporRequestsList& operator=(const TransporRequestsList& _Src_Requests_List) 
+    {
+        if(this == &_Src_Requests_List)
+            return *this;
+        this->list_requests.clear();
+        this->list_requests.reserve(_Src_Requests_List.list_requests.capacity());
+        this->list_requests.assign(_Src_Requests_List.list_requests.begin(), _Src_Requests_List.list_requests.end());
+        return *this;
+    }
+
 
 };
 
