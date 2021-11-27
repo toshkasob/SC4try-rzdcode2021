@@ -12,7 +12,8 @@ class TransporRequestsList {
  *
  */
 class TransportRequestUnit {
-    time_t         time_4_get_vehicle_; //! Дата и время подачи ТС
+public:
+    struct tm    * time_4_get_vehicle_; //! Дата и время подачи ТС
     unsigned int   passengers_numb_;    //! Количество пассажиров
     float          cargo_volume_; //! Объем груза: undefined => 0.0
     std::string    department_; //! Наименование структурного подразделения
@@ -35,10 +36,11 @@ class TransportRequestUnit {
  *
  */
 class TransportRequestUnitFull : public TransportRequestUnit {
+public:
     std::string    request_numb_;   //! Номер заявки
     std::string    request_id_intro_;   //! Внутренний ИД заявки исполнителя
     std::string    status_description_; //! Описание статуса
-    time_t         time_return_vehicle_;    //! Время возвращения ТС
+    struct tm    * time_return_vehicle_;    //! Время возвращения ТС
     std::string    priority_str_;  //! Приоритет (string)
     unsigned short priority_code_;  //! Приоритет (uint)
     std::string    request_type_str_;   //! Тип заявки
@@ -54,10 +56,10 @@ class TransportRequestUnitFull : public TransportRequestUnit {
              int   affiliation_type_vehicle_;   //! Тип транспортного средства по принадлежн
     std::string    signature_pixmap_;   //! пиктограмма подписи
     std::string    signature_fullname_; //! ФИО подписавшего
-    time_t         signature_time_; //! дата и время подписи
+    struct tm    * signature_time_; //! дата и время подписи
     std::string    waybill_number_; //! Номер путевого листа
-    time_t         OTZ_time_beg_;   //! ОТЗ. дата и Время начала
-    time_t         OTZ_time_end_;   //! ОТЗ. дата и Время конца
+    struct tm    * OTZ_time_beg_;   //! ОТЗ. дата и Время начала
+    struct tm    * OTZ_time_end_;   //! ОТЗ. дата и Время конца
     float          OTZ_timework_;   //! ОТЗ. Время работы на заказчика
 
     std::string    OTZ;  //! все поля с меткой Ответ: (разделены символом ';')
@@ -66,11 +68,11 @@ class TransportRequestUnitFull : public TransportRequestUnit {
              int   area_department_;    //! Участок структурного подразделения
     std::string    violations_str_; //! Наименование нарушения при выполнении
              int   BE_; //! БЕ
-    time_t         request_time_;   //! Дата заявки
+    struct tm    * request_time_;   //! Дата заявки
              int   request_ID_; //! ID заявки на перевозку
              int   request_status_; //! Статус заявки на перевозку
-    time_t         request_status_time_;   //! Дата и время заявки
-    time_t         work_time_;   //! Время работы на заказчика
+    struct tm    * request_status_time_;   //! Дата и время заявки
+    struct tm    * work_time_;   //! Время работы на заказчика
     std::string    request_type_;   //! Тип заявки на перевозку
     std::string    voucher_status_; //! Статус проверки талона
     std::string    voucher_check_errors_;//! Ошибки при сверке талона
@@ -79,5 +81,5 @@ class TransportRequestUnitFull : public TransportRequestUnit {
     std::string    motor_depot_str_;    //! Наименование автобазы/автоколонны
     bool           is_request_cancel_by_deadline_;  //! Заявка отменена с нарушением сроков
 
-    int read_csv(std::string filename) ;
+    int read_file_with_tab_delim(std::string filename) ;
 };
